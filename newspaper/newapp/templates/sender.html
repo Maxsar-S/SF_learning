@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> Новости недели: {{ category_name  }} </title>
+</head>
+<body>
+    <h1> Приветствую, {{ user }}, новая новость в твоей любимой категории {{ category_name  }} за последнюю неделю({{ week_number_last }}) ! </h1>
+<hr>
+{% for news in text %}
+{{ news }}
+{% endfor%}
+<br>
+</body>
+</html>

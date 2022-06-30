@@ -1,0 +1,48 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+Поиск новостей!
+{% endblock title %}
+
+{% block content %}
+<h1>Ищите актуальные новости!</h1>
+<h3> {{ next_news|default_if_none:"Последние новости ежедневно!" }} </h3>
+<hr>
+<form action="" method="get">
+       {# Переменная, которую мы передали через контекст, может сгенерировать нам форму с полями #}
+       {{ filter.form.as_p }}
+       {# Добавим кнопку отправки данных формы #}
+       <input type="submit" value="Найти" />
+   </form>
+
+<table>
+    <thead>
+        <th>
+            Дата публикации
+        </th>
+        <th>
+            Заголовок
+        </th>
+        <th>
+            Имя автора
+        </th>
+    </thead>
+    {% for search in filter.qs %}
+    <tr>
+        <td>
+            {{ search.time_create }}
+        </td>
+        <td>
+            {{ search.title }}
+        </td>
+        <td>
+            {{ search.author }}
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock content %}
