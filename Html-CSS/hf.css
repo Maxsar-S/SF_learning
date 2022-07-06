@@ -1,0 +1,40 @@
+
+.header{
+    background-color: black;
+    font-size: 20px;
+    color: white;
+}
+
+.navigation{
+    float: right;
+    height: 100%;
+}
+ 
+.navigation a{
+    height: 100%;
+    display: table;
+    float: left;
+    padding: 0px 20px;
+    background-color: #101010;
+}
+ 
+.navigation a li{
+    vertical-align: middle;
+    display: table-cell;
+    font-size: 20px;
+    color: white;
+}
+ 
+.navigation a:hover{
+    background-color: gray;
+    color: #101010;
+}
+
+.content{
+    margin-top: 75px;
+    font-size: 20px;
+}
+
+.content p{
+    font-size: 20px;
+}
