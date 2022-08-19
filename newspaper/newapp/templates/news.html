@@ -11,6 +11,8 @@
 <h3> {{ next_news|default_if_none:"Последние новости ежедневно!" }} </h3>
 <hr>
 {% if posts %}
+    {% load cache %}
+    {% cache 60 posts_id %}
     <table>
         <tr>
             <td>Заглавие</td>
@@ -30,7 +32,7 @@
     </tr>
     {% endfor %}
     </table>
-
+    {% endcache %}
     {% else %}
     <h2>Новостей нет.</h2>
     {% endif %}
@@ -52,5 +54,6 @@
            <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
        {% endif %}
    {% endif %}
+
 
 {% endblock content %}

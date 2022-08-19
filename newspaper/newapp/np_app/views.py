@@ -14,6 +14,8 @@ from .models import Post, Category, User
 from django.http import HttpResponse
 from django.views import View
 from .tasks import post_now
+from django.core.cache import cache
+
 
 
 class CategoryList(ListView):
@@ -50,6 +52,17 @@ class PostDetail(DetailView):
     model = Post
     template_name = 'news_.html'
     context_object_name = 'news_'
+
+    def get_object(self, *args, **kwargs): # переопределяем метод получения объекта
+        obj = cache.get(f'posts-{self.kwargs["pk"]}', None)# кэш очень похож на словарь, и метод get действует так же.
+        # Он забирает значение по ключу, если его нет, то забирает None.
+
+        # если объекта нет в кэше, то получаем его и записываем в кэш
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'posts-{self.kwargs["pk"]}', obj)
+
+        return obj
 
 
 class Search(ListView):

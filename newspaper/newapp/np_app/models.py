@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
+from django.core.cache import cache
 
 
 class Author(models.Model):
@@ -54,6 +55,7 @@ class Post(models.Model):
     post_text = models.TextField()
     rating = models.SmallIntegerField(default=0)
 
+
     def like(self):
         self.rating += 1
         self.save()
@@ -68,8 +70,15 @@ class Post(models.Model):
     def __str__(self):
         return f'{self.title.title()} {self.time_create} {self.rating} {self.post_text[:20]}'
 
-    def get_absolute_url(self):
+    def get_absolute_url(self): # добавим абсолютный путь, чтобы после создания нас перебрасывало на страницу с новостью
         return f'/news/{self.id}'
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs) # сначала вызываем метод родителя, чтобы объект сохранился
+        cache.delete(f'posts-{self.pk}')
+
+    def get_cat(self): # для отображения значения категории один ко многим в админ панели
+        return '\n'.join([c.name for c in self.post_category.all()])
 
 
 class PostCategory(models.Model):
@@ -98,4 +107,3 @@ class Comment(models.Model):
     def dislike(self):
         self.rating -= 1
         self.save()
-
