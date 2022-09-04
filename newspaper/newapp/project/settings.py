@@ -111,6 +111,19 @@ DATABASES = {
     }
 }
 
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    },
+}
+"""
+
 CASHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
@@ -203,3 +216,118 @@ CELERY_RESULT_BACKEND = os.getenv("CELERY_BROKER_URL")
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'console_WARNING', 'console_ERROR', 'newapp'],
+            'level': 'DEBUG',
+        },
+        'django.server': {
+            'handlers': ['newapp_errors', 'mail_admins'],
+            'level': 'ERROR',
+        },
+        'django.template': {
+            'handlers': ['newapp_errors'],
+            'level': 'ERROR',
+        },
+        'django.db_backends': {
+            'handlers': ['newapp_errors'],
+            'level': 'ERROR',
+        },
+        'django.request': {
+            'handlers': ['newapp_errors', 'mail_admins'],
+            'level': 'ERROR',
+        },
+        'django.security': {
+            'handlers': ['newapp_security'],
+            'level': 'DEBUG',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'myformat',
+            'filters': ['require_debug_true'],
+        },
+        'console_WARNING': {
+            'level': 'WARNING',
+            'class': 'logging.StreamHandler',
+            'formatter': 'myformat_WARNING',
+            'filters': ['require_debug_true'],
+        },
+        'console_ERROR': {
+            'level': 'ERROR',
+            'class': 'logging.StreamHandler',
+            'formatter': 'myformat_ERROR',
+            'filters': ['require_debug_true'],
+        },
+        'newapp': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'general.log',
+            'formatter': 'myformat_INFO',
+            'filters': ['require_debug_true'],
+        },
+        'newapp_errors': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'errors.log',
+            'formatter': 'myformat_ERROR_file',
+        },
+        'newapp_security': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'security.log',
+            'formatter': 'myformat_INFO',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'formatter': 'myformat_ERROR_mail',
+            'filters': ['require_debug_false'],
+        }
+    },
+    'formatters': {
+        'myformat': {
+            'format': '{asctime} {levelname} {message}',
+            'datetime': '%Y.%m.%d %H:%M:%S',
+            'style': '{',
+        },
+        'myformat_WARNING': {
+            'format': '{pathname}',
+            'style': '{',
+        },
+        'myformat_ERROR': {
+            'format': '{exc_info}',
+            'style': '{',
+        },
+        'myformat_INFO': {
+            'format': '{asctime} {levelname} {module} {message}',
+            'datetime': '%Y.%m.%d %H:%M:%S',
+            'style': '{',
+        },
+        'myformat_ERROR_file': {
+            'format': '{asctime} {levelname} {message} {pathname} {exc_info}',
+            'datetime': '%Y.%m.%d %H:%M:%S',
+            'style': '{',
+        },
+        'myformat_ERROR_mail': {
+            'format': '{asctime} {levelname} {message} {pathname} {exc_info}',
+            'datetime': '%Y.%m.%d %H:%M:%S',
+            'style': '{',
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
+}

@@ -14,7 +14,7 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR('Удаление отменено'))
 
         try:
-            post_category = Category.get(name=options['post_category'])
+            post_category = Category.objects.get(name=options['post_category'])
             Post.objects.filter(post_category==post_category).delete()
             self.stdout.write(self.style.SUCCESS('Успешно удалены все новости из категории {post_category.name}'))
 

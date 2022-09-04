@@ -1,6 +1,7 @@
 from datetime import datetime
 from django.shortcuts import render, reverse, redirect
 
+
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
@@ -11,11 +12,15 @@ from .filters import PostFilter
 from .forms import PostForm, UserForm
 from .models import Post, Category, User
 
+
 from django.http import HttpResponse
 from django.views import View
 from .tasks import post_now
 from django.core.cache import cache
 
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class CategoryList(ListView):
@@ -36,6 +41,7 @@ def add_subscribe(request, pk):
 
 # Список новостей
 class PostList(ListView):
+    logger.info('INFO')
     model = Post
     ordering = ['-time_create']
     template_name = 'news.html'
@@ -119,4 +125,5 @@ class IndexView(View):
         notify_new_post.delay()
         weekly_send_subscribers.delay()
         return HttpResponse('Hello!')
+
 
