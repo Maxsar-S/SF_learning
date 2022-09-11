@@ -1,0 +1,37 @@
+{{% extends 'flatpages/default.html' %}
+
+{% block title %} Post delete {% endblock title %}
+
+{% block content %}
+<h2>Вы действительно хотите удалить данное объявление?</h2>
+<table>
+    <thead>
+        <th>
+            Заголовок
+        </th>
+        <th>
+            Категория
+        </th>
+        <th>
+            Текст
+        </th>
+        <th>
+            Файл
+        </th>
+        <th>
+            Автор
+        </th>
+    </thead>
+    <tr>
+        <td>{{ post.title }}</td>
+               <td>{{ post.category }}</td>
+               <td>{{ post.text }}</td>
+               <td>{{ post.upload }}</td>
+               <td>{{ post.author }}</td>
+    </tr>
+</table>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="подтвердить"></form>
+{% endblock content %}

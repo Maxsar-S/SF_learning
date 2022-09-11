@@ -1,0 +1,25 @@
+{{% extends 'flatpages/default.html' %}
+
+{% block title %} Reply delete {% endblock title %}
+
+{% block content %}
+<h2>Вы подтверждаете удаление данного объявления?</h2>
+ <table>
+        <thead>
+            <th> Объявление </th>
+            <th> Текст отлика </th>
+            <th> Автор отклика </th>
+            <th> Статус </th>
+        </thead>
+        <tr>
+            <td>{{ reply.post.title }}</td>
+            <td>{{ reply.text }}</td>
+            <td>{{ reply.author }}</td>
+            <td>{{ reply.status  }}</td>
+        </tr>
+ </table>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="подтвердить"></form>
+{% endblock content %}
