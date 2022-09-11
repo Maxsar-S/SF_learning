@@ -1,0 +1,4 @@
+2022-08-31 15:08:41,900 INFO autoreload Watching for file changes with StatReloader
+2022-09-04 02:23:20,895 INFO autoreload Watching for file changes with StatReloader
+2022-09-04 02:30:28,618 INFO autoreload Watching for file changes with StatReloader
+2022-09-04 02:30:51,045 INFO autoreload /home/vladimir/dev/D13/newspaper/newapp/np_app/models.py changed, reloading.
