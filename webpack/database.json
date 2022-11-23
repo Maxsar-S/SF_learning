@@ -1,0 +1,15 @@
+{
+  "posts": [
+    { "id": 1, "title": "json-server", "author": "typicode" },
+    { "id": 2, "title": "webpack", "author": "typicode" }
+  ],
+  "comments": [
+    { "id": 1, "body": "some comment", "postId": 1 }
+  ],
+  "contacts": [
+    {"id": 1, "title":  "contact1", "email": "email1@mail.ru", "phone":  "+7123"},
+    {"id": 2, "title":  "contact2", "email": "email2@mail.ru", "phone":  "+7123"},
+    {"id": 3, "title":  "contact3", "email": "email3@mail.ru", "phone":  "+7123"}
+  ],
+  "profile": { "name": "typicode" }
+}

@@ -1,0 +1,1 @@
+(()=>{"use strict";const o=o=>3.14*o;console.log("ES6 modules!"),console.log("sum = 5"),console.log("multiply = 40"),console.log("multiply from math = "+o(5)),document.write("multiply from math = "+o(5))})();
